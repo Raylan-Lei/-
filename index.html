@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>波波花店</title>
+<style>
+:root{--bg:#E8EDEC;--card:#F3F6F5;--ink:#38424A;--muted:#68757D;--sage:#A9BDA5;--leaf2:#8DA58A;--pink:#E5C7C1;--blue:#B4C4D1;--butter:#E8DAAE;--accent:#5F7F6B;--btn-ink:#F3F6F5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#222A2E;--card:#2B3439;--ink:#E4EAE8;--muted:#98A6AC;--sage:#7F9A85;--leaf2:#5E7A66;--pink:#C9A59F;--blue:#52687A;--butter:#B9AB78;--accent:#A9C4B1;--btn-ink:#222A2E}}
+:root[data-theme="dark"]{--bg:#222A2E;--card:#2B3439;--ink:#E4EAE8;--muted:#98A6AC;--sage:#7F9A85;--leaf2:#5E7A66;--pink:#C9A59F;--blue:#52687A;--butter:#B9AB78;--accent:#A9C4B1;--btn-ink:#222A2E}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+header{display:flex;justify-content:space-between;align-items:center;padding:24px 0;gap:12px}
+.logo{font-weight:700;font-size:19px;letter-spacing:.05em}
+nav{display:flex;align-items:center;gap:20px}
+nav a{color:var(--muted);text-decoration:none;font-size:15px}
+nav a:hover{color:var(--ink)}
+.bag{background:var(--pink);color:#38424A;padding:7px 16px;border-radius:999px;font-size:14px;font-weight:600}
+.bag b{display:inline-block;min-width:1.2em;text-align:center}
+.pop{animation:popk .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes popk{0%{transform:scale(.8)}100%{transform:scale(1)}}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center;padding:28px 0 88px}
+h1{font-size:clamp(34px,6vw,60px);line-height:1.2;margin:0 0 20px;letter-spacing:.02em}
+.lead{color:var(--muted);font-size:18px;max-width:30em;margin:0 0 32px}
+.btn{display:inline-block;background:var(--accent);color:var(--btn-ink);padding:14px 30px;border-radius:999px;text-decoration:none;font-weight:600;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.btn:hover{transform:translateY(-3px) scale(1.04)}
+.stage{position:relative;aspect-ratio:1;max-width:460px;width:100%;margin:0 auto}
+.stage::before{content:"";position:absolute;inset:8% 4% 8% 6%;background:var(--blue);border-radius:58% 42% 55% 45%/48% 56% 44% 52%}
+.mascot{position:absolute;left:11%;top:12%;width:78%;display:block}
+.mascot svg{width:100%;height:auto;overflow:visible;display:block}
+.mascot.jump{animation:jump .7s cubic-bezier(.3,1.4,.5,1)}
+@keyframes jump{0%{transform:scale(1,1)}20%{transform:scale(1.08,.9)}50%{transform:translateY(-34px) scale(.95,1.08)}80%{transform:scale(1.05,.94)}100%{transform:none}}
+.float{animation:float 5s ease-in-out infinite}
+.leaf{animation:sway 4s ease-in-out infinite;transform-origin:200px 130px}
+.leaf.r{animation-delay:-2s}
+.eyes{animation:blink 6s infinite;transform-origin:200px 232px}
+.pup{transition:transform .12s}
+.shadow{animation:sh 5s ease-in-out infinite;transform-origin:200px 372px}
+@keyframes float{50%{transform:translateY(-10px)}}
+@keyframes sh{50%{transform:scaleX(.9)}}
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.deco{position:absolute;transition:transform .4s ease-out;transform:translate(calc(var(--px,0)*var(--k,20)*1px),calc(var(--py,0)*var(--k,20)*.5px));pointer-events:none}
+.sun{width:20%;right:0;top:0;--k:-14}
+.sun circle.ray{animation:spin 30s linear infinite;transform-origin:40px 40px}
+.c1{width:28%;left:-4%;top:4%;--k:26}
+.c2{width:22%;right:-2%;bottom:14%;--k:-30}
+.bf{width:12%;left:70%;top:44%;--k:40;animation:fly 9s ease-in-out infinite}
+.wing{animation:flap .35s ease-in-out infinite alternate;transform-origin:20px 15px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes flap{to{transform:scaleX(.35)}}
+@keyframes fly{0%,100%{margin:0 0 0 0}25%{margin:-30px 0 0 -40px}50%{margin:10px 0 0 -70px}75%{margin:-20px 0 0 -20px}}
+.bubble{position:absolute;left:0;top:-2%;z-index:2;background:var(--card);padding:8px 16px;border-radius:18px;font-size:15px;box-shadow:0 4px 0 color-mix(in srgb,var(--ink) 10%,transparent);max-width:60%}
+.bubble::after{content:"";position:absolute;left:28px;bottom:-8px;border:8px solid transparent;border-top-color:var(--card);border-bottom:0}
+.pt{position:absolute;left:50%;top:45%;width:9px;height:9px;border-radius:50%;pointer-events:none;animation:pt 1s ease-out forwards;z-index:3}
+@keyframes pt{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+section{padding:0 0 88px}
+h2{font-size:26px;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 32px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px 22px}
+.pl{position:relative;text-align:center}
+.js .pl{opacity:0;transform:scale(.85) translateY(14px);transition:opacity .5s,transform .6s cubic-bezier(.3,1.5,.5,1)}
+.js .pl.in{opacity:1;transform:none}
+.fig{display:block;width:100%;padding:14px 10px 6px;background:var(--t);border-radius:46% 54% 50% 50%/52% 46% 54% 48%}
+.pl:nth-child(2) .fig{border-radius:54% 46% 44% 56%/46% 54% 46% 54%}
+.pl:nth-child(3) .fig{border-radius:50% 50% 56% 44%/56% 44% 52% 48%}
+.fig svg{width:100%;height:auto;display:block;transition:transform .45s cubic-bezier(.3,1.7,.5,1);transform-origin:50% 100%}
+.fig:hover svg{transform:translateY(-6px) rotate(-3deg) scale(1.04)}
+.pl.hop svg{animation:hop .6s cubic-bezier(.3,1.4,.5,1)}
+@keyframes hop{30%{transform:translateY(-22px) scale(.96,1.06)}60%{transform:scale(1.06,.94)}}
+.pl h3{margin:14px 0 2px;font-size:18px}
+.price{color:var(--muted);font-size:14px}
+.tip{max-height:0;overflow:hidden;opacity:0;color:var(--muted);font-size:14px;transition:max-height .4s,opacity .3s}
+.pl.open .tip{max-height:80px;opacity:1;margin-top:6px}
+.pl.open .fig svg{animation:wig .7s ease-in-out}
+@keyframes wig{25%{transform:rotate(-6deg)}50%{transform:rotate(5deg)}75%{transform:rotate(-3deg)}}
+.add{margin-top:10px;background:var(--card);padding:6px 16px;border-radius:999px;font-size:14px;font-weight:600;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.add:hover{transform:scale(1.08)}.add:active{transform:scale(.94)}
+.game{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;background:var(--card);border-radius:40px;padding:36px}
+.gs{position:relative;max-width:300px;width:100%;margin:0 auto}
+.gs svg{width:100%;height:auto;display:block;overflow:visible}
+.g{opacity:0;transform:scale(.5);transform-origin:100px 122px;transition:opacity .3s,transform .6s cubic-bezier(.3,1.7,.5,1)}
+[data-stage="0"] .g0,[data-stage="1"] .g1,[data-stage="2"] .g2,[data-stage="3"] .g3{opacity:1;transform:none}
+.drops circle{opacity:0;fill:var(--blue)}
+.rain .drops circle{animation:drop .8s ease-in forwards}
+.rain .drops circle:nth-child(2){animation-delay:.12s}.rain .drops circle:nth-child(3){animation-delay:.24s}
+@keyframes drop{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(80px)}}
+.msg{min-height:3.4em;color:var(--muted);margin:0 0 20px}
+.ghead{font-size:22px;margin:0 0 10px}
+.row2{display:flex;gap:12px;flex-wrap:wrap}
+.btn2{background:var(--accent);color:var(--btn-ink);padding:12px 26px;border-radius:999px;font-weight:600;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.btn2:hover{transform:scale(1.06)}.btn2:active{transform:scale(.94)}
+.btn2.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--ink) 25%,transparent)}
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.visit p{margin:0 0 6px;color:var(--muted)}
+.visit b{color:var(--ink)}
+footer{padding:0 0 48px;color:var(--muted);font-size:14px}
+@media (max-width:760px){
+ .hero,.game,.visit{grid-template-columns:1fr}
+ .stage{order:-1;max-width:340px}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .game{padding:24px;border-radius:32px}
+ nav a{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .pl{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="pot" viewBox="0 0 60 40"><rect width="60" height="10" rx="5" fill="currentColor"/><path d="M5 8H55L49 40H11Z" fill="currentColor"/></symbol>
+ <symbol id="face" viewBox="0 0 20 14"><circle cx="2.6" cy="8" r="2.6" fill="#D9A9A3" opacity=".6"/><circle cx="17.4" cy="8" r="2.6" fill="#D9A9A3" opacity=".6"/><circle cx="6" cy="4" r="1.9" fill="#38424A"/><circle cx="14" cy="4" r="1.9" fill="#38424A"/><path d="M7.5 8.5Q10 11.5 12.5 8.5" fill="none" stroke="#38424A" stroke-width="1.5" stroke-linecap="round"/></symbol>
+</svg>
+<div class="wrap">
+ <header>
+  <div class="logo">波波花店</div>
+  <nav><a href="#plants">在售植物</a><a href="#grow">养一盆</a><a href="#visit">来店里</a><button class="bag" id="bag" aria-label="购物袋">购物袋 <b id="n">0</b></button></nav>
+ </header>
+
+ <main>
+ <section class="hero">
+  <div>
+   <h1>把一点绿，<br>带回家</h1>
+   <p class="lead">我们只卖好养的小植物。每一盆都附一张照顾卡，告诉你什么时候浇水、放在哪个窗边。</p>
+   <a class="btn" href="#plants">挑一盆</a>
+  </div>
+  <div class="stage" id="stage">
+   <svg class="deco sun" viewBox="0 0 80 80" aria-hidden="true"><circle class="ray" cx="40" cy="40" r="34" fill="none" stroke="var(--butter)" stroke-width="6" stroke-dasharray="4 12" stroke-linecap="round"/><circle cx="40" cy="40" r="22" fill="var(--butter)"/><use href="#face" x="29" y="33" width="22" height="15"/></svg>
+   <svg class="deco c1" viewBox="0 0 100 50" aria-hidden="true"><g fill="var(--card)"><circle cx="30" cy="30" r="16"/><circle cx="52" cy="22" r="20"/><circle cx="74" cy="30" r="14"/><rect x="30" y="30" width="44" height="16" rx="8"/></g><use href="#face" x="42" y="26" width="18" height="12"/></svg>
+   <svg class="deco c2" viewBox="0 0 100 50" aria-hidden="true"><g fill="var(--card)"><circle cx="30" cy="30" r="16"/><circle cx="52" cy="22" r="20"/><circle cx="74" cy="30" r="14"/><rect x="30" y="30" width="44" height="16" rx="8"/></g></svg>
+   <div class="deco bf" aria-hidden="true"><svg viewBox="0 0 40 30"><g class="wing"><ellipse cx="10" cy="11" rx="9" ry="8" fill="var(--pink)"/><ellipse cx="30" cy="11" rx="9" ry="8" fill="var(--pink)"/><ellipse cx="12" cy="22" rx="6" ry="5" fill="var(--butter)"/><ellipse cx="28" cy="22" rx="6" ry="5" fill="var(--butter)"/></g><rect x="18.5" y="6" width="3" height="20" rx="1.5" fill="var(--ink)"/></svg></div>
+   <div class="bubble" id="bub" aria-live="polite">你好，我是波波！</div>
+   <button class="mascot" id="mas" aria-label="摸摸波波">
+    <svg viewBox="0 0 400 400" aria-hidden="true">
+     <ellipse class="shadow" cx="200" cy="372" rx="92" ry="12" fill="var(--ink)" opacity=".12"/>
+     <g class="float">
+      <g class="leaf"><path d="M200 130C170 96 130 98 118 112 128 146 168 154 200 130Z" fill="var(--sage)"/></g>
+      <g class="leaf r"><path d="M200 130C230 90 272 88 286 104 276 142 232 152 200 130Z" fill="var(--sage)"/></g>
+      <path d="M200 140V158" stroke="var(--sage)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M92 250C92 180 140 150 200 150 260 150 308 180 308 250 308 320 262 366 200 366 138 366 92 320 92 250Z" fill="var(--pink)"/>
+      <ellipse cx="82" cy="276" rx="16" ry="12" fill="var(--pink)" transform="rotate(-24 82 276)"/><ellipse cx="318" cy="276" rx="16" ry="12" fill="var(--pink)" transform="rotate(24 318 276)"/>
+      <circle cx="140" cy="268" r="14" fill="#D9A9A3" opacity=".55"/><circle cx="260" cy="268" r="14" fill="#D9A9A3" opacity=".55"/>
+      <g class="eyes"><circle cx="158" cy="232" r="13" fill="#F7F4F2"/><circle cx="242" cy="232" r="13" fill="#F7F4F2"/><circle class="pup" cx="158" cy="232" r="7" fill="#38424A"/><circle class="pup" cx="242" cy="232" r="7" fill="#38424A"/></g>
+      <path d="M186 276Q200 290 214 276" fill="none" stroke="#38424A" stroke-width="5" stroke-linecap="round"/>
+     </g>
+    </svg>
+   </button>
+  </div>
+ </section>
+
+ <section id="plants">
+  <h2>这周在店里</h2>
+  <p class="sub">点一点小植物，看看它们怎么照顾。</p>
+  <div class="grid">
+   <div class="pl" style="--t:color-mix(in srgb,var(--sage) 45%,transparent)">
+    <button class="fig" aria-expanded="false" aria-label="仙人掌波"><svg viewBox="0 0 120 140"><rect x="46" y="36" width="28" height="66" rx="14" fill="var(--sage)"/><path d="M46 70H38Q32 70 32 62V54M74 80H82Q88 80 88 72V64" stroke="var(--sage)" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="60" cy="33" r="8" fill="var(--pink)"/><circle cx="60" cy="33" r="3" fill="var(--butter)"/><use href="#pot" x="30" y="96" width="60" height="40" style="color:var(--pink)"/><use href="#face" x="48" y="108" width="24" height="17"/></svg></button>
+    <h3>仙人掌</h3><div class="price">¥ 29</div><div class="tip">晒太阳就行，半个月浇一次水。</div>
+    <button class="add">放进袋子</button>
+   </div>
+   <div class="pl" style="--t:color-mix(in srgb,var(--pink) 50%,transparent)">
+    <button class="fig" aria-expanded="false" aria-label="琴叶榕"><svg viewBox="0 0 120 140"><path d="M60 98V48" stroke="var(--leaf2)" stroke-width="4" stroke-linecap="round"/><ellipse cx="36" cy="72" rx="14" ry="20" transform="rotate(-35 36 72)" fill="var(--sage)"/><ellipse cx="84" cy="68" rx="14" ry="20" transform="rotate(35 84 68)" fill="var(--sage)"/><ellipse cx="60" cy="44" rx="20" ry="28" fill="var(--sage)"/><path d="M60 20V70" stroke="var(--leaf2)" stroke-width="3" stroke-linecap="round"/><use href="#pot" x="30" y="96" width="60" height="40" style="color:var(--blue)"/><use href="#face" x="48" y="108" width="24" height="17"/></svg></button>
+    <h3>琴叶榕</h3><div class="price">¥ 79</div><div class="tip">放明亮窗边，土干透再浇水。</div>
+    <button class="add">放进袋子</button>
+   </div>
+   <div class="pl" style="--t:color-mix(in srgb,var(--blue) 55%,transparent)">
+    <button class="fig" aria-expanded="false" aria-label="豆瓣绿"><svg viewBox="0 0 120 140"><path d="M60 98L38 62M60 98L82 58M60 98V42" stroke="var(--leaf2)" stroke-width="3.5" stroke-linecap="round"/><circle cx="38" cy="54" r="16" fill="var(--sage)"/><circle cx="82" cy="50" r="16" fill="var(--sage)"/><circle cx="60" cy="34" r="17" fill="var(--sage)"/><use href="#pot" x="30" y="96" width="60" height="40" style="color:var(--butter)"/><use href="#face" x="48" y="108" width="24" height="17"/></svg></button>
+    <h3>豆瓣绿</h3><div class="price">¥ 25</div><div class="tip">半阴也能长，叶子软了就该浇水。</div>
+    <button class="add">放进袋子</button>
+   </div>
+   <div class="pl" style="--t:color-mix(in srgb,var(--butter) 50%,transparent)">
+    <button class="fig" aria-expanded="false" aria-label="龟背竹"><svg viewBox="0 0 120 140"><path d="M60 98V70" stroke="var(--leaf2)" stroke-width="4" stroke-linecap="round"/><path d="M60 92C22 88 14 54 36 34 48 24 58 30 60 40 62 30 72 24 84 34 106 54 98 88 60 92Z" fill="var(--sage)"/><path d="M60 90V44M60 76L40 62M60 76L80 62M60 62L46 48M60 62L74 48" stroke="var(--leaf2)" stroke-width="2.5" stroke-linecap="round" fill="none"/><use href="#pot" x="30" y="96" width="60" height="40" style="color:var(--pink)"/><use href="#face" x="48" y="108" width="24" height="17"/></svg></button>
+    <h3>龟背竹</h3><div class="price">¥ 98</div><div class="tip">叶子大，客厅角落最合适。</div>
+    <button class="add">放进袋子</button>
+   </div>
+  </div>
+ </section>
+
+ <section id="grow">
+  <div class="game">
+   <div class="gs" id="gs">
+    <svg viewBox="0 0 200 200" id="gsvg" data-stage="0" aria-hidden="true">
+     <ellipse cx="100" cy="192" rx="70" ry="7" fill="var(--ink)" opacity=".1"/>
+     <g class="g g0"><ellipse cx="100" cy="118" rx="9" ry="5" fill="var(--leaf2)"/></g>
+     <g class="g g1"><path d="M100 124V106" stroke="var(--leaf2)" stroke-width="4" stroke-linecap="round"/><ellipse cx="91" cy="104" rx="9" ry="5" transform="rotate(-30 91 104)" fill="var(--sage)"/><ellipse cx="109" cy="104" rx="9" ry="5" transform="rotate(30 109 104)" fill="var(--sage)"/></g>
+     <g class="g g2"><path d="M100 124V76" stroke="var(--leaf2)" stroke-width="4" stroke-linecap="round"/><ellipse cx="86" cy="100" rx="13" ry="7" transform="rotate(-30 86 100)" fill="var(--sage)"/><ellipse cx="114" cy="100" rx="13" ry="7" transform="rotate(30 114 100)" fill="var(--sage)"/><ellipse cx="88" cy="80" rx="11" ry="6" transform="rotate(-35 88 80)" fill="var(--sage)"/><ellipse cx="112" cy="80" rx="11" ry="6" transform="rotate(35 112 80)" fill="var(--sage)"/></g>
+     <g class="g g3"><path d="M100 124V56" stroke="var(--leaf2)" stroke-width="4" stroke-linecap="round"/><ellipse cx="84" cy="102" rx="14" ry="7" transform="rotate(-30 84 102)" fill="var(--sage)"/><ellipse cx="116" cy="102" rx="14" ry="7" transform="rotate(30 116 102)" fill="var(--sage)"/><g fill="var(--pink)"><circle cx="100" cy="30" r="12"/><circle cx="100" cy="66" r="12"/><circle cx="82" cy="48" r="12"/><circle cx="118" cy="48" r="12"/></g><circle cx="100" cy="48" r="13" fill="var(--butter)"/><use href="#face" x="90" y="42" width="20" height="14"/></g>
+     <use href="#pot" x="55" y="118" width="90" height="60" style="color:var(--blue)"/><use href="#face" x="82" y="136" width="36" height="25"/>
+     <g class="drops"><circle cx="86" cy="8" r="4"/><circle cx="100" cy="2" r="4"/><circle cx="114" cy="8" r="4"/></g>
+    </svg>
+   </div>
+   <div>
+    <h2 class="ghead">来养一盆试试</h2>
+    <p class="msg" id="msg" aria-live="polite">把种子埋好了，浇点水吧。</p>
+    <div class="row2"><button class="btn2" id="water">浇一下水</button><button class="btn2 ghost" id="reset">重新种</button></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="visit" id="visit">
+  <div><h2>来店里</h2><p class="sub" style="margin:0">欢迎来店里逛逛。</p></div>
+  <div><p><b>地址</b>　厦门大学马来西亚分校</p><p><b>营业</b>　每天 10:00 到 18:00</p><p><b>自取</b>　在袋子里选好植物，到店报手机尾号。</p></div>
+ </section>
+ </main>
+ <footer>波波花店</footer>
+</div>
+<script>
+(function(){
+var $=function(s,c){return(c||document).querySelector(s)},$$=function(s,c){return[].slice.call((c||document).querySelectorAll(s))};
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+document.documentElement.classList.add('js');
+function rep(el,c){el.classList.remove(c);void el.offsetWidth;el.classList.add(c)}
+function burst(host,n,cols){if(rm)return;for(var i=0;i<n;i++){var s=document.createElement('span'),a=Math.random()*6.28,d=50+Math.random()*60;s.className='pt';s.style.setProperty('--dx',Math.cos(a)*d+'px');s.style.setProperty('--dy',Math.sin(a)*d-30+'px');s.style.background=cols[i%cols.length];host.appendChild(s);(function(x){setTimeout(function(){x.remove()},1000)})(s)}}
+var CC=['var(--pink)','var(--butter)','var(--sage)'];
+var stage=$('#stage'),pups=$$('.pup',stage);
+if(!rm)addEventListener('pointermove',function(e){
+ var b=stage.getBoundingClientRect(),cx=b.left+b.width/2,cy=b.top+b.height*.55,dx=e.clientX-cx,dy=e.clientY-cy,d=Math.hypot(dx,dy)||1,k=Math.min(d,220)/220*4.5;
+ pups.forEach(function(p){p.style.transform='translate('+dx/d*k+'px,'+dy/d*k+'px)'});
+ stage.style.setProperty('--px',(e.clientX/innerWidth-.5).toFixed(2));stage.style.setProperty('--py',(e.clientY/innerHeight-.5).toFixed(2));
+});
+var lines=['你好，我是波波！','今天给植物浇水了吗？','窗边的光刚刚好。','别戳啦，有点痒！','要不要带一盆回家？'],li=0,mas=$('#mas'),bub=$('#bub');
+mas.addEventListener('click',function(){li=(li+1)%lines.length;bub.textContent=lines[li];rep(bub,'pop');rep(mas,'jump');burst(stage,6,CC)});
+var n=0,nEl=$('#n'),bag=$('#bag');
+var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.style.transitionDelay=(e.target.dataset.i*90)+'ms';e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.2}):null;
+$$('.pl').forEach(function(p,i){
+ var fig=$('.fig',p);p.dataset.i=i;
+ if(io)io.observe(p);else p.classList.add('in');
+ fig.addEventListener('click',function(){var o=p.classList.toggle('open');fig.setAttribute('aria-expanded',o);rep(fig.firstElementChild,'x');fig.firstElementChild.classList.remove('x')});
+ $('.add',p).addEventListener('click',function(){n++;nEl.textContent=n;rep(bag,'pop');rep(p,'hop');burst(p,6,CC)});
+});
+var gs=$('#gs'),sv=$('#gsvg'),st=0,msg=$('#msg'),water=$('#water');
+var ms=['把种子埋好了，浇点水吧。','发芽啦！再浇一次。','长出新叶子了，再来一次。','开花啦，波波很开心！'];
+water.addEventListener('click',function(){
+ if(st>=3){burst(gs,10,CC);return}
+ rep(sv,'rain');setTimeout(function(){st++;sv.dataset.stage=st;msg.textContent=ms[st];if(st===3)burst(gs,14,CC)},rm?0:600)});
+$('#reset').addEventListener('click',function(){st=0;sv.dataset.stage=0;msg.textContent=ms[0]});
+})();
+</script>
+</body>
+</html>
