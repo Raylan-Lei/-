@@ -106,6 +106,41 @@ footer{padding:0 0 48px;color:var(--muted);font-size:14px}
  .game{padding:24px;border-radius:32px}
  nav a{display:none}
 }
+.ov{position:fixed;inset:0;background:rgba(30,40,45,.38);opacity:0;pointer-events:none;transition:opacity .3s;z-index:20}
+.ov.open{opacity:1;pointer-events:auto}
+.cart{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);z-index:30;background:var(--card);display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top,0px)) 20px calc(18px + env(safe-area-inset-bottom,0px));border-radius:32px 0 0 32px;visibility:hidden;transform:translateX(105%);transition:transform .5s cubic-bezier(.3,1.25,.5,1),visibility 0s .5s}
+.cart.open{visibility:visible;transform:none;transition:transform .5s cubic-bezier(.3,1.25,.5,1),visibility 0s}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ch h2{font-size:20px;margin:0;flex:1}
+.cic{width:56px;height:47px;flex:none}
+.cart.open .cic{animation:roll .8s cubic-bezier(.3,1.4,.5,1)}
+@keyframes roll{0%{transform:translateX(40px) rotate(8deg)}100%{transform:none}}
+.cx{width:36px;height:36px;border-radius:50%;background:var(--bg);font-size:22px;line-height:1;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.cx:hover{transform:rotate(90deg) scale(1.1)}
+.cb{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;min-height:120px}
+.it{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;background:var(--bg);border-radius:26px;padding:10px 12px 10px 10px}
+.it.nw{animation:itin .55s cubic-bezier(.3,1.5,.5,1)}
+@keyframes itin{0%{transform:scale(.8) translateX(30px);opacity:0}100%{transform:none;opacity:1}}
+.th{width:64px;height:64px;border-radius:44% 56% 50% 50%/52% 46% 54% 48%;background:var(--t);padding:4px}
+.th svg{width:100%;height:100%;display:block}
+.it b{display:block;font-size:16px}
+.it .pr{color:var(--muted);font-size:14px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:28px;height:28px;border-radius:50%;background:var(--card);font-weight:700;transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.qty button:hover{transform:scale(1.15)}.qty button:active{transform:scale(.88)}
+.qty span{min-width:1.2em;text-align:center;font-weight:600}
+.em{text-align:center;padding:20px 8px;color:var(--muted)}
+.em svg{width:150px;height:125px;animation:float 4s ease-in-out infinite}
+.em p{margin:12px 0 18px}
+.em h3{margin:6px 0 0;font-size:20px;color:var(--ink)}
+.rc{list-style:none;padding:0;margin:12px 0;text-align:left;color:var(--ink)}
+.rc li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:2px dashed color-mix(in srgb,var(--ink) 15%,transparent)}
+.cf{padding-top:14px;border-top:2px dashed color-mix(in srgb,var(--ink) 15%,transparent);margin-top:12px}
+.cart.empty .cf{display:none}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.tot b{font-size:24px}
+.cf .btn2{width:100%;padding:14px}
+@media (max-width:760px){.cart{top:auto;left:0;right:0;width:100%;max-height:86vh;border-radius:32px 32px 0 0;transform:translateY(105%)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .pl{opacity:1;transform:none}}
 </style>
 </head>
@@ -113,6 +148,7 @@ footer{padding:0 0 48px;color:var(--muted);font-size:14px}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
  <symbol id="pot" viewBox="0 0 60 40"><rect width="60" height="10" rx="5" fill="currentColor"/><path d="M5 8H55L49 40H11Z" fill="currentColor"/></symbol>
  <symbol id="face" viewBox="0 0 20 14"><circle cx="2.6" cy="8" r="2.6" fill="#D9A9A3" opacity=".6"/><circle cx="17.4" cy="8" r="2.6" fill="#D9A9A3" opacity=".6"/><circle cx="6" cy="4" r="1.9" fill="#38424A"/><circle cx="14" cy="4" r="1.9" fill="#38424A"/><path d="M7.5 8.5Q10 11.5 12.5 8.5" fill="none" stroke="#38424A" stroke-width="1.5" stroke-linecap="round"/></symbol>
+ <symbol id="cart" viewBox="0 0 120 100"><path d="M8 12H24L36 64H96L106 28H30" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 28H106L96 64H36Z" fill="var(--pink)"/><path d="M68 26C68 14 76 8 88 10 88 20 80 26 68 26ZM68 26C68 16 60 10 50 12 50 22 58 26 68 26Z" fill="var(--sage)"/><use href="#face" x="54" y="36" width="28" height="20"/><circle cx="44" cy="84" r="9" fill="var(--blue)" stroke="var(--ink)" stroke-width="4"/><circle cx="90" cy="84" r="9" fill="var(--blue)" stroke="var(--ink)" stroke-width="4"/></symbol>
 </svg>
 <div class="wrap">
  <header>
@@ -206,6 +242,12 @@ footer{padding:0 0 48px;color:var(--muted);font-size:14px}
  </main>
  <footer>波波花店</footer>
 </div>
+<div class="ov" id="ov"></div>
+<aside class="cart empty" id="cart" role="dialog" aria-modal="true" aria-labelledby="ct" aria-hidden="true">
+ <div class="ch"><svg class="cic" viewBox="0 0 120 100" aria-hidden="true"><use href="#cart"/></svg><h2 id="ct">波波的小推车</h2><button class="cx" id="cx" aria-label="关闭">×</button></div>
+ <div class="cb" id="cb"></div>
+ <div class="cf"><div class="tot"><span>合计</span><b id="tot">¥ 0</b></div><button class="btn2" id="go">生成取货清单</button></div>
+</aside>
 <script>
 (function(){
 var $=function(s,c){return(c||document).querySelector(s)},$$=function(s,c){return[].slice.call((c||document).querySelectorAll(s))};
@@ -228,7 +270,43 @@ $$('.pl').forEach(function(p,i){
  var fig=$('.fig',p);p.dataset.i=i;
  if(io)io.observe(p);else p.classList.add('in');
  fig.addEventListener('click',function(){var o=p.classList.toggle('open');fig.setAttribute('aria-expanded',o);rep(fig.firstElementChild,'x');fig.firstElementChild.classList.remove('x')});
- $('.add',p).addEventListener('click',function(){n++;nEl.textContent=n;rep(bag,'pop');rep(p,'hop');burst(p,6,CC)});
+ $('.add',p).addEventListener('click',function(){addItem(p);rep(bag,'pop');rep(p,'hop');burst(p,6,CC)});
+});
+var cart={},fresh=null,ov=$('#ov'),cp=$('#cart'),cb=$('#cb'),tot=$('#tot'),lastF=null,CI='<svg viewBox="0 0 120 100" aria-hidden="true"><use href="#cart"/></svg>';
+function fmt(v){return '¥ '+v}
+function addItem(p){
+ var nm=$('h3',p).textContent;
+ if(cart[nm])cart[nm].q++;else{cart[nm]={nm:nm,pr:parseInt($('.price',p).textContent.replace('¥',''),10),q:1,t:p.style.getPropertyValue('--t'),svg:$('.fig svg',p)};fresh=nm}
+ count();
+}
+function count(){var c=0;for(var k in cart)c+=cart[k].q;nEl.textContent=c}
+function render(){
+ var ks=Object.keys(cart),sum=0;cb.innerHTML='';cp.classList.toggle('empty',!ks.length);
+ if(!ks.length){cb.innerHTML='<div class="em">'+CI+'<p>小推车空空的，<br>去挑一盆植物吧。</p><button class="btn2" data-a="shop">去挑植物</button></div>';tot.textContent=fmt(0);return}
+ ks.forEach(function(k){var it=cart[k],d=document.createElement('div');sum+=it.pr*it.q;
+  d.className='it'+(k===fresh?' nw':'');d.dataset.k=k;
+  d.innerHTML='<div class="th"></div><div><b></b><span class="pr"></span></div><div class="qty"><button data-a="m" aria-label="少一盆">−</button><span></span><button data-a="p" aria-label="多一盆">+</button></div>';
+  $('.th',d).style.setProperty('--t',it.t);$('.th',d).appendChild(it.svg.cloneNode(true));
+  $('b',d).textContent=it.nm;$('.pr',d).textContent=fmt(it.pr);$('.qty span',d).textContent=it.q;cb.appendChild(d)});
+ fresh=null;tot.textContent=fmt(sum);
+}
+function openC(){lastF=document.activeElement;render();cp.classList.add('open');ov.classList.add('open');cp.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(function(){$('#cx').focus()},60)}
+function closeC(){cp.classList.remove('open');ov.classList.remove('open');cp.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lastF)lastF.focus()}
+bag.addEventListener('click',openC);ov.addEventListener('click',closeC);$('#cx').addEventListener('click',closeC);
+addEventListener('keydown',function(e){if(e.key==='Escape')closeC()});
+cb.addEventListener('click',function(e){
+ var b=e.target.closest('button[data-a]');if(!b)return;var a=b.dataset.a;
+ if(a==='shop'){closeC();$('#plants').scrollIntoView({behavior:rm?'auto':'smooth'});return}
+ if(a==='back'){render();return}
+ var d=b.closest('.it'),k=d&&d.dataset.k;if(!k)return;
+ cart[k].q+=a==='p'?1:-1;if(cart[k].q<1)delete cart[k];
+ count();render();
+});
+$('#go').addEventListener('click',function(){
+ var ks=Object.keys(cart),s=0,h='';if(!ks.length)return;
+ ks.forEach(function(k){var i=cart[k];s+=i.pr*i.q;h+='<li><span>'+i.nm+' × '+i.q+'</span><b>'+fmt(i.pr*i.q)+'</b></li>'});
+ cb.innerHTML='<div class="em">'+CI+'<h3>取货清单</h3><ul class="rc">'+h+'</ul><p>共 '+fmt(s)+'。截图保存，到店出示给店员，付款后取走。</p><button class="btn2 ghost" data-a="back">返回修改</button></div>';
+ cp.classList.add('empty');burst(cp,12,CC);
 });
 var gs=$('#gs'),sv=$('#gsvg'),st=0,msg=$('#msg'),water=$('#water');
 var ms=['把种子埋好了，浇点水吧。','发芽啦！再浇一次。','长出新叶子了，再来一次。','开花啦，波波很开心！'];
